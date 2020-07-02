@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/nandj-osu/appsploit/issues"
   },
-  "homepage": "https://github.com/nandj-osu/appsploit#readme"
+  "homepage": "https://github.com/nandj-osu/appsploit#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
+    "express-session": "^1.17.1",
+    "sqlite3": "^5.0.0"
+  }
 }
