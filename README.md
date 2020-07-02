@@ -4,8 +4,8 @@ CS 467 - Capstone Project -- Security-based research project.
 
 ## Requirements
 
-Node v14.5.0
-npm v6.14.5
+Node v14.5.0  
+npm v6.14.5  
 
 ## Introduction
 Web-based applications are ubiquitous today, making data accessible and more exposed than ever before. Due to the nature of web application implementations, and that they handle user-provided inputs, the modern developer needs to consider validation a top priority. However, it’s not just data integrity that they should be worried about. What if bad user input isn’t innocuous, but instead a well-crafted attack against a shortcoming in the application’s implementation? The method by which an attacker exploits an application is known as the attack vector. There are many types of attack vectors, each of which could result in a range of consequences, from the exposure of sensitive data to the complete incapacitation of a website.
