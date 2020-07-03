@@ -3,6 +3,10 @@
     margin-top: 56px;
 }
 
-.big-checkbox {width: 66px; height: 66px; margin-right: 1rem;}
+.big-checkbox {width: 4rem; height: 4rem; margin-right: 1rem;}
 
-.task { margin-top: 1em; }
+.task { margin-top: 1rem; }
+
+.form-inline { padding-left: 5rem; }
+
+#task_desc { width: 100%; }

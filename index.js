@@ -34,17 +34,6 @@ let db = new sqlite3.Database('./db/appsploit.db', sqlite3.OPEN_READWRITE, (err)
 //
 // Application Endpoints
 //
-app.get('/', function(req, res, next){
-    let context = {
-        vulnerability: "Select a vulnerability"
-    };
-
-    db.all("select * from todo", [], (err, rows) => {
-        context.tasks = rows
-        res.render('tasks', context);
-    })
-});
-
 app.get('/togglesecure', function(req, res, next) {
 
     if (req.session.secure) {
@@ -55,6 +44,34 @@ app.get('/togglesecure', function(req, res, next) {
         res.json({"secure": true})
     }
 });
+
+// 
+// Default Todo Behavior
+// 
+app.get('/', function(req, res, next){
+    let context = {
+        vulnerability: "Select a vulnerability",
+        endpoint: req.originalUrl
+    };
+
+    db.all("select * from todo", [], (err, rows) => {
+        context.tasks = rows
+        res.render('default/tasks', context);
+    })
+});
+
+app.post('/', function(req, res, next) {
+    
+    data = [req.body.desc, 0, 1]
+
+    sql = "insert into todo(task_description, task_complete, user_id) values(?,?,?)"
+    db.run(sql, data, function(err){
+        if (err) {
+            console.error(err.message)
+        } 
+    })
+    res.redirect(req.originalUrl)
+})
 
 
 // 
