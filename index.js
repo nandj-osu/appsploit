@@ -61,7 +61,6 @@ app.get('/togglesecure', function(req, res, next) {
 // 
 // Default Todo Behavior
 // 
-// Handlebars.registerPartial('default', '{{prefix}}');
 app.get('/', function(req, res, next){
     let context = {
         vulnerability: "Select a vulnerability",
@@ -76,6 +75,40 @@ app.get('/', function(req, res, next){
 });
 
 app.post('/', function(req, res, next) {
+    
+    data = [req.body.desc, 0, 1]
+
+    sql = "insert into todo(task_description, task_complete, user_id) values(?,?,?)"
+    db.run(sql, data, function(err){
+        if (err) {
+            console.error(err.message)
+        } 
+    })
+    res.redirect(req.originalUrl)
+})
+
+// 
+// XSS
+// 
+app.get('/xss', function(req, res, next){
+    let context = {
+        vulnerability: "Cross-site scripting (XSS)",
+        endpoint: req.originalUrl,
+        exploit_card: 'xss_card'
+    };
+
+    db.all("select * from todo", [], (err, rows) => {
+        context.tasks = rows
+
+        if(req.session.secure) {
+            res.render('secure_tasks', context);
+        } else{
+            res.render('xss_tasks', context);
+        }
+    })
+});
+
+app.post('/xss', function(req, res, next) {
     
     data = [req.body.desc, 0, 1]
 
