@@ -36,18 +36,13 @@ let db = new sqlite3.Database('./db/appsploit.db', sqlite3.OPEN_READWRITE, (err)
 //
 app.get('/', function(req, res, next){
     let context = {
-        page_views: [],
         vulnerability: "Select a vulnerability"
     };
 
-    if(req.session.page_views){
-      context.page_views = req.session.page_views++;      
-   } else {
-      req.session.page_views = 1;
-      context.page_views = req.session.page_views;  
-   }
-
-    res.render('home', context);
+    db.all("select * from todo", [], (err, rows) => {
+        context.tasks = rows
+        res.render('home', context);
+    })
 });
 
 app.get('/togglesecure', function(req, res, next) {

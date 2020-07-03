@@ -2,3 +2,7 @@
 #main-content {
     margin-top: 56px;
 }
+
+.big-checkbox {width: 66px; height: 66px; margin-right: 1rem;}
+
+.task { margin-top: 1em; }

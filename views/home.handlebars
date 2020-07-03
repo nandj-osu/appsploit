@@ -1,2 +1,17 @@
-<h1>Todo</h1>
-<p>{{page_views}}</p>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1>Todo List</h1>
+
+    <div class="mx-auto text-left" style="width: 30rem;">
+    {{#each tasks}}
+        <div class="task">
+            <input class="big-checkbox float-left" type="checkbox" aria-label="Checkbox for following text input">
+            <div class="card">            
+                <div class="card-body">
+                    {{this.task_description}}
+                </div>
+            </div>
+        </div>
+    {{/each}}
+    </div>
+</div>
