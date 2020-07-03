@@ -29,12 +29,23 @@
           <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Login</a>
         </li>
       </ul>
-      <select class="custom-select mr-3" style="width: 300px;">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
+      <div class="btn-group dropleft mr-3">
+        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{vulnerability}}
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/injection">Injection</a>
+          <a class="dropdown-item" href="/broken-auth">Broken Auth</a>
+          <a class="dropdown-item" href="/sensitive-data">Sensitive data exposure</a>
+          <a class="dropdown-item" href="/xxe">XML external entities (XXE)</a>
+          <a class="dropdown-item" href="/broken-access-control">Broken access control</a>
+          <a class="dropdown-item" href="/security-misconfiguration">Security misconfiguration</a>
+          <a class="dropdown-item" href="/xss">Cross-site scripting (XSS)</a>
+          <a class="dropdown-item" href="/insecure-deserialization">Insecure deserialization</a>
+          <a class="dropdown-item" href="/know-vulnerabilities">Using components with known vulnerabilities</a>
+          <a class="dropdown-item" href="/logging-monitoring">Insufficient logging and monitoring</a>
+        </div>
+      </div>
       <button id="toggle-secure" type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false">
         Vulnerable
       </button>      

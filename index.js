@@ -36,7 +36,8 @@ let db = new sqlite3.Database('./db/appsploit.db', sqlite3.OPEN_READWRITE, (err)
 //
 app.get('/', function(req, res, next){
     let context = {
-        page_views: []
+        page_views: [],
+        vulnerability: "Select a vulnerability"
     };
 
     if(req.session.page_views){
