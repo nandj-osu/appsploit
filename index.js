@@ -154,6 +154,18 @@ app.get('/task/:task_id', function(req, res, next) {
 
 })
 
+app.get('/task/:task_id/delete', function(req, res, next) {
+    data = [req.params.task_id]
+    sql = "delete from todo where task_id = ?"
+    db.run(sql, data, function(err){
+        if (err) {
+            console.error(err.message)
+        } else {
+            res.sendStatus(200);
+        }
+    });
+});
+
 //
 // Error Handlers
 //
