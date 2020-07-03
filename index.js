@@ -1,6 +1,8 @@
 const express = require("express");
 const handlebars = require("express-handlebars");
 const bodyparser = require("body-parser");
+const cookieparser = require('cookie-parser');
+const session = require('express-session');
 const sqlite3 = require('sqlite3').verbose();
 const app = express();
 
@@ -13,6 +15,8 @@ app.set("view engine", "handlebars");
 app.set("port", process.argv[2] || 80);
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(bodyparser.json());
+app.use(cookieparser());
+app.use(session({secret: "secret"}));
 app.use('/', express.static('public'));
 
 // 
@@ -32,10 +36,28 @@ let db = new sqlite3.Database('./db/appsploit.db', sqlite3.OPEN_READWRITE, (err)
 //
 app.get('/', function(req, res, next){
     let context = {
-        results: []
+        page_views: []
     };
 
+    if(req.session.page_views){
+      context.page_views = req.session.page_views++;      
+   } else {
+      req.session.page_views = 1;
+      context.page_views = req.session.page_views;  
+   }
+
     res.render('home', context);
+});
+
+app.get('/togglesecure', function(req, res, next) {
+
+    if (req.session.secure) {
+        req.session.secure = false;
+        res.json({"secure": false})
+    } else {
+        req.session.secure = true;
+        res.json({"secure": true})
+    }
 });
 
 
