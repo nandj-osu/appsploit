@@ -5,7 +5,7 @@
 
 .big-checkbox {width: 4rem; height: 4rem; margin-right: 1rem;}
 
-.task { margin-top: 1rem; }
+.task { margin-top: 1rem; min-height: 4rem;}
 
 .form-inline { padding-left: 5rem; }
 
