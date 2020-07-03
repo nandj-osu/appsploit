@@ -59,6 +59,16 @@ app.get('/togglesecure', function(req, res, next) {
 });
 
 // 
+// Static pages
+// 
+app.get('/instructions', function(req, res, next){
+    let context = {
+        vulnerability: "Select a vulnerability",
+    };
+    res.render('instructions', context);
+});
+
+// 
 // Default Todo Behavior
 // 
 app.get('/', function(req, res, next){
