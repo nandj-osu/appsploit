@@ -41,7 +41,7 @@ app.get('/', function(req, res, next){
 
     db.all("select * from todo", [], (err, rows) => {
         context.tasks = rows
-        res.render('home', context);
+        res.render('tasks', context);
     })
 });
 
