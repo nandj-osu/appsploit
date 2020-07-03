@@ -1,5 +1,9 @@
 const express = require("express");
-const handlebars = require("express-handlebars");
+const handlebars = require("express-handlebars").create({
+    partialsDir  : [
+        'views/partials/'
+    ]
+});
 const bodyparser = require("body-parser");
 const cookieparser = require('cookie-parser');
 const session = require('express-session');
@@ -10,7 +14,7 @@ const app = express();
 //
 // Configuration
 //
-app.engine("handlebars", handlebars());
+app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 app.set("port", process.argv[2] || 80);
 app.use(bodyparser.urlencoded({extended: false}));
