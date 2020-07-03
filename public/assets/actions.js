@@ -1,6 +1,9 @@
 $( document ).ready(function() {
 
 
+    // 
+    // Toggle Secure
+    // 
     $('#toggle-secure').click(function(){
         var $btn = $(this);
         $.get('/togglesecure', function(data){
@@ -15,9 +18,9 @@ $( document ).ready(function() {
                 $btn.text('Vulnerable');
             }
         });
-
     });
 
+    
 
 
 });
