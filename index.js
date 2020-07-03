@@ -13,6 +13,7 @@ app.set("view engine", "handlebars");
 app.set("port", process.argv[2] || 80);
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(bodyparser.json());
+app.use('/', express.static('public'));
 
 // 
 // Connect to database
