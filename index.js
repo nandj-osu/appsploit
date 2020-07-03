@@ -10,7 +10,7 @@ const app = express();
 //
 app.engine("handlebars", handlebars());
 app.set("view engine", "handlebars");
-app.set("port", process.argv[2]);
+app.set("port", process.argv[2] || 80);
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(bodyparser.json());
 
