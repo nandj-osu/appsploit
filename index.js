@@ -32,7 +32,7 @@ let db = new sqlite3.Database('./db/appsploit.db', sqlite3.OPEN_READWRITE, (err)
 
 
 //
-// Endpoints
+// Application Endpoints
 //
 app.get('/', function(req, res, next){
     let context = {
@@ -56,6 +56,28 @@ app.get('/togglesecure', function(req, res, next) {
     }
 });
 
+
+// 
+// Task Endpoints
+// 
+app.get('/task/:task_id', function(req, res, next) {
+
+    var complete = 0;
+    if (req.query.complete === "true") {
+        complete = 1
+    }
+    data = [complete, req.params.task_id]
+    sql = "update todo set task_complete = ? where task_id = ?"
+
+    db.run(sql, data, function(err){
+        if (err) {
+            console.error(err.message)
+        } else {
+            res.json({"complete": req.query.complete})
+        }
+    })
+
+})
 
 //
 // Error Handlers

@@ -5,7 +5,9 @@
     <div class="mx-auto text-left" style="width: 30rem;">
     {{#each tasks}}
         <div class="task">
-            <input class="big-checkbox float-left" type="checkbox" aria-label="Checkbox for following text input">
+            <input class="big-checkbox float-left" type="checkbox" data-task-id={{this.task_id}} 
+                {{#if this.task_complete}}checked{{/if}}>
+                
             <div class="card">            
                 <div class="card-body">
                     {{this.task_description}}
