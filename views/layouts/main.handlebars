@@ -44,7 +44,11 @@
   </nav>
 
     <div id="main-content" class="container">
-	{{{body}}}
+	   {{{body}}}
+
+     {{#if exploit_card}}
+     <div id="exploit-card">{{> (lookup . 'exploit_card' )}} </div>
+     {{/if}}
     </div>
     
 

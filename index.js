@@ -52,15 +52,17 @@ app.get('/togglesecure', function(req, res, next) {
 // 
 // Default Todo Behavior
 // 
+// Handlebars.registerPartial('default', '{{prefix}}');
 app.get('/', function(req, res, next){
     let context = {
         vulnerability: "Select a vulnerability",
-        endpoint: req.originalUrl
+        endpoint: req.originalUrl,
+        exploit_card: 'default_card'
     };
 
     db.all("select * from todo", [], (err, rows) => {
         context.tasks = rows
-        res.render('default/tasks', context);
+        res.render('secure_tasks', context);
     })
 });
 
