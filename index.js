@@ -24,6 +24,15 @@ app.use(session({secret: "secret"}));
 app.use('/', express.static('public'));
 
 // 
+// Middleware
+// 
+app.use((req, res, next) => {
+    res.locals.secure = req.session.secure;
+    next();
+});
+
+
+// 
 // Connect to database
 // 
 let db = new sqlite3.Database('./db/appsploit.db', sqlite3.OPEN_READWRITE, (err) => {
