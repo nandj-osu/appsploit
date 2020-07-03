@@ -1,5 +1,9 @@
 $( document ).ready(function() {
 
+    // 
+    // Initialize tool tips
+    // 
+    $(function () {$('[data-toggle="tooltip"]').tooltip()});
 
     // 
     // Toggle Secure
