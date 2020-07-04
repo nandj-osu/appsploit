@@ -1,9 +1,35 @@
 const express = require("express");
-const handlebars = require("express-handlebars");
-const bodyParser = require("body-parser");
+const handlebars = require("express-handlebars").create({
+    partialsDir  : [
+        'views/partials/'
+    ]
+});
+const bodyparser = require("body-parser");
+const cookieparser = require('cookie-parser');
+const session = require('express-session');
 const sqlite3 = require('sqlite3').verbose();
-
 const app = express();
+
+
+//
+// Configuration
+//
+app.engine("handlebars", handlebars.engine);
+app.set("view engine", "handlebars");
+app.set("port", process.argv[2] || 80);
+app.use(bodyparser.urlencoded({extended: false}));
+app.use(bodyparser.json());
+app.use(cookieparser());
+app.use(session({secret: "secret"}));
+app.use('/', express.static('public'));
+
+// 
+// Middleware
+// 
+app.use((req, res, next) => {
+    res.locals.secure = req.session.secure;
+    next();
+});
 
 
 // 
@@ -15,4 +41,149 @@ let db = new sqlite3.Database('./db/appsploit.db', sqlite3.OPEN_READWRITE, (err)
   } else {
     console.log('Connected to the appsploit database.');
   }
+});
+
+
+//
+// Application Endpoints
+//
+app.get('/togglesecure', function(req, res, next) {
+
+    if (req.session.secure) {
+        req.session.secure = false;
+        res.json({"secure": false})
+    } else {
+        req.session.secure = true;
+        res.json({"secure": true})
+    }
+});
+
+// 
+// Static pages
+// 
+app.get('/instructions', function(req, res, next){
+    let context = {
+        vulnerability: "Select a vulnerability",
+    };
+    res.render('instructions', context);
+});
+
+// 
+// Default Todo Behavior
+// 
+app.get('/', function(req, res, next){
+    let context = {
+        vulnerability: "Select a vulnerability",
+        endpoint: req.originalUrl,
+        exploit_card: 'default_card'
+    };
+
+    db.all("select * from todo", [], (err, rows) => {
+        context.tasks = rows
+        res.render('secure_tasks', context);
+    })
+});
+
+app.post('/', function(req, res, next) {
+    
+    data = [req.body.desc, 0, 1]
+
+    sql = "insert into todo(task_description, task_complete, user_id) values(?,?,?)"
+    db.run(sql, data, function(err){
+        if (err) {
+            console.error(err.message)
+        } 
+    })
+    res.redirect(req.originalUrl)
+})
+
+// 
+// XSS
+// 
+app.get('/xss', function(req, res, next){
+    let context = {
+        vulnerability: "Cross-site scripting (XSS)",
+        endpoint: req.originalUrl,
+        exploit_card: 'xss_card'
+    };
+
+    db.all("select * from todo", [], (err, rows) => {
+        context.tasks = rows
+
+        if(req.session.secure) {
+            res.render('secure_tasks', context);
+        } else{
+            res.render('xss_tasks', context);
+        }
+    })
+});
+
+app.post('/xss', function(req, res, next) {
+    
+    data = [req.body.desc, 0, 1]
+
+    sql = "insert into todo(task_description, task_complete, user_id) values(?,?,?)"
+    db.run(sql, data, function(err){
+        if (err) {
+            console.error(err.message)
+        } 
+    })
+    res.redirect(req.originalUrl)
+})
+
+
+// 
+// Task Endpoints
+// 
+app.get('/task/:task_id', function(req, res, next) {
+
+    var complete = 0;
+    if (req.query.complete === "true") {
+        complete = 1
+    }
+    data = [complete, req.params.task_id]
+    sql = "update todo set task_complete = ? where task_id = ?"
+
+    db.run(sql, data, function(err){
+        if (err) {
+            console.error(err.message)
+        } else {
+            res.json({"complete": req.query.complete})
+        }
+    })
+
+})
+
+app.get('/task/:task_id/delete', function(req, res, next) {
+    data = [req.params.task_id]
+    sql = "delete from todo where task_id = ?"
+    db.run(sql, data, function(err){
+        if (err) {
+            console.error(err.message)
+        } else {
+            res.sendStatus(200);
+        }
+    });
+});
+
+//
+// Error Handlers
+//
+app.use(function(req, res){
+    res.status(404);
+    res.render('404');
+});
+
+app.use(function(err, req, res, next){
+    console.log(err.stack);
+    res.status(500);
+    res.render('500');
+});
+
+
+//
+// Server entry point
+//
+app.listen(app.get('port'), function(){
+    console.log(`Express started on port ${app.get('port')}`);
 });
