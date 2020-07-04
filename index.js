@@ -65,7 +65,7 @@ app.get('/togglesecure', (req, res, next) => routeToggleSecure(req, res, next));
 
 // Task Endpoints
 app.get('/task/:task_id', (req, res, next) => routeToggleTask(req, res, next));
-app.get('/task/:task_id/delete', (req, res, next) => routeDeleteTask(req, res, next));
+app.delete('/task/:task_id/', (req, res, next) => routeDeleteTask(req, res, next));
 
 // Error Handlers
 app.use(function(req, res){
