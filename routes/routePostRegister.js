@@ -1,4 +1,11 @@
 const db = require("../db");
+const crypto = require('crypto');
+
+const generateSha256Hash = (password) => {
+    const sha256 = crypto.createHash('sha256');
+    const hash = sha256.update(password).digest('base64');
+    return hash;
+}
 
 const routePostRegister = (req, res, next) => {
     let context = {};
@@ -24,8 +31,9 @@ const routePostRegister = (req, res, next) => {
             return res.render('register', context);
         }
 
-        let params = [req.body.username, req.body.password];
-        db.run(`INSERT INTO user(username, password_plaintext) VALUES(?, ?)`, params, function(err) {
+        let hash = generateSha256Hash(req.body.password);
+        let params = [req.body.username, req.body.password, hash];
+        db.run(`INSERT INTO user(username, password_plaintext, password_sha256) VALUES(?, ?, ?)`, params, function(err) {
             if (err) {
                 return console.log(err.message);
             }
