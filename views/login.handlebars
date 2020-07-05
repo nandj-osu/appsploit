@@ -1,4 +1,9 @@
 <div class="col-md-4 mx-auto">
+  {{#if message}}
+    <div class='alert {{messageClass}}'' role='alert'>
+      {{message}}
+    </div>
+  {{/if}}
     <h1>Login</h1>
     <form method='post' action="/login">
       <div class='form-group'>

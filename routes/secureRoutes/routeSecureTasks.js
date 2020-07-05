@@ -7,7 +7,7 @@ const routeSecureTasks = (req, res, next) => {
         exploit_card: 'default_card'
     };
 
-    db.all("select * from todo", [], (err, rows) => {
+    db.all("SELECT * FROM todo WHERE user_id = ?", req.session.user, (err, rows) => {
         context.tasks = rows
         res.render('secure_tasks', context);
     });
