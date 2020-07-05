@@ -24,6 +24,9 @@ const routeXSSTasks = require("./routes/XSSRoutes/routeXSSTasks");
 const routeXSSPostTask = require("./routes/XSSRoutes/routeXSSPostTask");
 const routeToggleTask = require("./routes/routeToggleTask");
 const routeDeleteTask = require("./routes/routeDeleteTask");
+const routeLogin = require("./routes/routeLogin.js")
+const routeRegister = require("./routes/routeRegister.js")
+const routePostRegister = require("./routes/routePostRegister.js")
 
 //
 // Configuration
@@ -62,6 +65,9 @@ app.post('/xss', (req, res, next) => routeXSSPostTask(req, res, next));
 // Static pages & general routes
 app.get('/instructions', (req, res, next) => routeInstructions(req, res, next));
 app.get('/togglesecure', (req, res, next) => routeToggleSecure(req, res, next));
+app.get('/login', (req, res, next) => routeLogin(req, res, next));
+app.get('/register', (req, res, next) => routeRegister(req, res, next));
+app.post('/register', (req, res, next) => routePostRegister(req, res, next));
 
 // Task Endpoints
 app.get('/task/:task_id', (req, res, next) => routeToggleTask(req, res, next));
