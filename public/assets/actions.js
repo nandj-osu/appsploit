@@ -42,11 +42,14 @@ $( document ).ready(function() {
     $('button.close').click(function(){
         var $btn = $(this);
         var task_id = $btn.data('task-id');
-        $.get(`/task/${task_id}/delete`, function(){
-            $btn.closest('.task').fadeOut(300, function(){
-                $(this).remove();
-            });
+        $.ajax({
+            url: `task/${task_id}`,
+            type: 'DELETE',
+            success: function(result) {
+                $btn.closest('.task').fadeOut(300, function(){
+                    $(this).remove();
+                });
+            }
         });
     });
-
 });
