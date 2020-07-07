@@ -8,7 +8,7 @@ const routeXSSTasks = (req, res, next) => {
     };
 
     db.all("SELECT * FROM todo WHERE user_id=?", req.session.user, (err, rows) => {
-        context.tasks = rows
+        context.tasks = rows;
 
         if (req.session.secure) {
             res.render("secure_tasks", context);

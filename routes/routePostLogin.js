@@ -8,21 +8,20 @@ const routePostLogin = (req, res, next) => {
             return console.error(err.message);
         }
         if (!row) {
-            context.message = 'invalid username and/or password'
-            context.messageClass = 'alert-danger';
-            return res.render('login', context);
+            context.message = "invalid username and/or password";
+            context.messageClass = "alert-danger";
+            return res.render("login", context);
         }
 
         let hash = cryptoFuncs.generateSha256Hash(req.body.password);
         if (hash === row.password_sha256) {
             req.session.user = row.id;
-            return res.redirect('/');
+            return res.redirect("/");
         }
 
-        context.message = 'invalid username and/or password'
-        context.messageClass = 'alert-danger';
-        res.render('login', context);
-
+        context.message = "invalid username and/or password";
+        context.messageClass = "alert-danger";
+        res.render("login", context);
     });
 };
 
