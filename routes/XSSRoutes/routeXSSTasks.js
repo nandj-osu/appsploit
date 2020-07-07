@@ -7,8 +7,8 @@ const routeXSSTasks = (req, res, next) => {
         exploit_card: "xss_card",
     };
 
-    db.all("select * from todo", [], (err, rows) => {
-        context.tasks = rows;
+    db.all("SELECT * FROM todo WHERE user_id=?", req.session.user, (err, rows) => {
+        context.tasks = rows
 
         if (req.session.secure) {
             res.render("secure_tasks", context);

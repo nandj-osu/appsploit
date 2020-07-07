@@ -22,6 +22,10 @@ const routeXSSTasks = require("./routes/XSSRoutes/routeXSSTasks");
 const routeXSSPostTask = require("./routes/XSSRoutes/routeXSSPostTask");
 const routeToggleTask = require("./routes/routeToggleTask");
 const routeDeleteTask = require("./routes/routeDeleteTask");
+const routeLogin = require("./routes/routeLogin.js")
+const routeRegister = require("./routes/routeRegister.js")
+const routePostRegister = require("./routes/routePostRegister.js")
+const routePostLogin = require("./routes/routePostLogin.js")
 
 //
 // Configuration
@@ -43,6 +47,15 @@ app.use((req, res, next) => {
     next();
 });
 
+function requireAuth(req, res, next) {
+    if (!req.session.user) {
+        res.redirect('/login');
+    } else {
+        next();
+    }
+}
+
+
 /*******************************************************************************
  * Set routes here
  *
@@ -50,16 +63,20 @@ app.use((req, res, next) => {
  ********************************************************************************/
 
 // Secure routes
-app.get("/", (req, res, next) => routeSecureTasks(req, res, next));
-app.post("/", (req, res, next) => routePostTask(req, res, next));
+app.get('/', requireAuth, (req, res, next) => routeSecureTasks(req, res, next));
+app.post('/', (req, res, next) => routePostTask(req, res, next));
 
 // XSS routes
-app.get("/xss", (req, res, next) => routeXSSTasks(req, res, next));
-app.post("/xss", (req, res, next) => routeXSSPostTask(req, res, next));
+app.get('/xss', requireAuth, (req, res, next) => routeXSSTasks(req, res, next));
+app.post('/xss', (req, res, next) => routeXSSPostTask(req, res, next));
 
 // Static pages & general routes
-app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));
-app.get("/togglesecure", (req, res, next) => routeToggleSecure(req, res, next));
+app.get('/instructions', (req, res, next) => routeInstructions(req, res, next));
+app.get('/togglesecure', (req, res, next) => routeToggleSecure(req, res, next));
+app.get('/login', (req, res, next) => routeLogin(req, res, next));
+app.get('/register', (req, res, next) => routeRegister(req, res, next));
+app.post('/register', (req, res, next) => routePostRegister(req, res, next));
+app.post('/login', (req, res, next) => routePostLogin(req, res, next));
 
 // Task Endpoints
 app.get("/task/:task_id", (req, res, next) => routeToggleTask(req, res, next));
