@@ -1,17 +1,15 @@
 const express = require("express");
 const handlebars = require("express-handlebars").create({
-    partialsDir  : [
-        'views/partials/'
-    ]
+    partialsDir: ["views/partials/"],
 });
 const bodyparser = require("body-parser");
-const cookieparser = require('cookie-parser');
-const session = require('express-session');
-const sqlite3 = require('sqlite3').verbose();
+const cookieparser = require("cookie-parser");
+const session = require("express-session");
+const sqlite3 = require("sqlite3").verbose();
 const app = express();
 
 // Database object
-var db = require('./db')
+var db = require("./db");
 
 //
 // Require modular routing files
@@ -35,15 +33,15 @@ const routePostLogin = require("./routes/routePostLogin.js")
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 app.set("port", process.argv[2] || 80);
-app.use(bodyparser.urlencoded({extended: false}));
+app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(cookieparser());
-app.use(session({secret: "secret"}));
-app.use('/', express.static('public'));
+app.use(session({ secret: "secret" }));
+app.use("/", express.static("public"));
 
-// 
+//
 // Middleware
-// 
+//
 app.use((req, res, next) => {
     res.locals.secure = req.session.secure;
     next();
@@ -59,10 +57,10 @@ function requireAuth(req, res, next) {
 
 
 /*******************************************************************************
-* Set routes here
-*
-* Controller functions
-********************************************************************************/
+ * Set routes here
+ *
+ * Controller functions
+ ********************************************************************************/
 
 // Secure routes
 app.get('/', requireAuth, (req, res, next) => routeSecureTasks(req, res, next));
@@ -81,29 +79,28 @@ app.post('/register', (req, res, next) => routePostRegister(req, res, next));
 app.post('/login', (req, res, next) => routePostLogin(req, res, next));
 
 // Task Endpoints
-app.get('/task/:task_id', (req, res, next) => routeToggleTask(req, res, next));
-app.delete('/task/:task_id/', (req, res, next) => routeDeleteTask(req, res, next));
+app.get("/task/:task_id", (req, res, next) => routeToggleTask(req, res, next));
+app.delete("/task/:task_id/", (req, res, next) => routeDeleteTask(req, res, next));
 
 // Error Handlers
-app.use(function(req, res){
+app.use(function (req, res) {
     res.status(404);
-    res.render('404');
+    res.render("404");
 });
 
-app.use(function(err, req, res, next){
+app.use(function (err, req, res, next) {
     console.log(err.stack);
     res.status(500);
-    res.render('500');
+    res.render("500");
 });
 
 /*******************************************************************************
  * End controller functions
  ******************************************************************************/
 
-
 //
 // Server entry point
 //
-app.listen(app.get('port'), function(){
-    console.log(`Express started on port ${app.get('port')}`);
+app.listen(app.get("port"), function () {
+    console.log(`Express started on port ${app.get("port")}`);
 });
