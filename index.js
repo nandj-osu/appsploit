@@ -33,6 +33,12 @@ const routeSecureTasks = require("./routes/secureRoutes/routeSecureTasks");
 const routeXSSTasks = require("./routes/XSSRoutes/routeXSSTasks");
 const routeXSSPostTask = require("./routes/secureRoutes/routePostTask");
 
+// Using known vulnerable components
+const routeKnownVulTasks = require("./routes/KnownVulRoutes/routeKnownVulTasks");
+const routeKnownVulPostTask = require("./routes/secureRoutes/routePostTask");
+
+
+
 //
 // Configuration
 //
