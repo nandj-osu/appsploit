@@ -15,17 +15,23 @@ var db = require("./db");
 // Require modular routing files
 //
 const routeInstructions = require("./routes/routeInstructions");
-const routeSecureTasks = require("./routes/secureRoutes/routeSecureTasks");
 const routeToggleSecure = require("./routes/routeToggleSecure");
-const routePostTask = require("./routes/secureRoutes/routePostTask");
-const routeXSSTasks = require("./routes/XSSRoutes/routeXSSTasks");
-const routeXSSPostTask = require("./routes/XSSRoutes/routeXSSPostTask");
+
 const routeToggleTask = require("./routes/routeToggleTask");
 const routeDeleteTask = require("./routes/routeDeleteTask");
+
 const routeLogin = require("./routes/routeLogin.js");
 const routeRegister = require("./routes/routeRegister.js");
 const routePostRegister = require("./routes/routePostRegister.js");
 const routePostLogin = require("./routes/routePostLogin.js");
+
+// Secured
+const routePostTask = require("./routes/secureRoutes/routePostTask");
+const routeSecureTasks = require("./routes/secureRoutes/routeSecureTasks");
+
+// XSS
+const routeXSSTasks = require("./routes/XSSRoutes/routeXSSTasks");
+const routeXSSPostTask = require("./routes/secureRoutes/routePostTask");
 
 //
 // Configuration
