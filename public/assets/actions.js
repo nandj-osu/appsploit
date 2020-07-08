@@ -48,6 +48,7 @@ $(document).ready(function () {
             type: "DELETE",
             success: function (result) {
                 $btn.closest(".task").fadeOut(300, function () {
+                    $('.tooltip').remove();
                     $(this).remove();
                 });
             },
