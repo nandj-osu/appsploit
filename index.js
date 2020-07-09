@@ -1,7 +1,5 @@
 const express = require("express");
-const handlebars = require("express-handlebars").create({
-    partialsDir: ["views/partials/"],
-});
+const handlebars = require("express-handlebars");
 const bodyparser = require("body-parser");
 const cookieparser = require("cookie-parser");
 const session = require("express-session");
