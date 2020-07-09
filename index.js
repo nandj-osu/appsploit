@@ -32,15 +32,16 @@ const routeXSSTasks = require("./routes/XSSRoutes/routeXSSTasks");
 const routeXSSPostTask = require("./routes/secureRoutes/routePostTask");
 
 // Using known vulnerable components
-const routeKnownVulTasks = require("./routes/KnownVulRoutes/routeKnownVulTasks");
+const routeKnownVulTasks = require("./routes/knownVulRoutes/routeKnownVulTasks");
 const routeKnownVulPostTask = require("./routes/secureRoutes/routePostTask");
-
 
 
 //
 // Configuration
 //
-app.engine("handlebars", handlebars.engine);
+app.engine("handlebars", handlebars({
+    helpers: require("./views/helpers")
+}));
 app.set("view engine", "handlebars");
 app.set("port", process.argv[2] || 80);
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -78,6 +79,10 @@ app.post("/", (req, res, next) => routePostTask(req, res, next));
 // XSS routes
 app.get("/xss", requireAuth, (req, res, next) => routeXSSTasks(req, res, next));
 app.post("/xss", (req, res, next) => routeXSSPostTask(req, res, next));
+
+// Known Vulnerability routes
+app.get("/know-vulnerabilities", requireAuth, (req, res, next) => routeKnownVulTasks(req, res, next));
+app.post("/know-vulnerabilities", (req, res, next) => routeKnownVulPostTask(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));
