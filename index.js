@@ -1,7 +1,5 @@
 const express = require("express");
-const handlebars = require("express-handlebars").create({
-    partialsDir: ["views/partials/"],
-});
+const handlebars = require("express-handlebars");
 const bodyparser = require("body-parser");
 const cookieparser = require("cookie-parser");
 const session = require("express-session");
@@ -15,22 +13,35 @@ var db = require("./db");
 // Require modular routing files
 //
 const routeInstructions = require("./routes/routeInstructions");
-const routeSecureTasks = require("./routes/secureRoutes/routeSecureTasks");
 const routeToggleSecure = require("./routes/routeToggleSecure");
-const routePostTask = require("./routes/secureRoutes/routePostTask");
-const routeXSSTasks = require("./routes/XSSRoutes/routeXSSTasks");
-const routeXSSPostTask = require("./routes/XSSRoutes/routeXSSPostTask");
+
 const routeToggleTask = require("./routes/routeToggleTask");
 const routeDeleteTask = require("./routes/routeDeleteTask");
+
 const routeLogin = require("./routes/routeLogin.js");
 const routeRegister = require("./routes/routeRegister.js");
 const routePostRegister = require("./routes/routePostRegister.js");
 const routePostLogin = require("./routes/routePostLogin.js");
 
+// Secured
+const routePostTask = require("./routes/secureRoutes/routePostTask");
+const routeSecureTasks = require("./routes/secureRoutes/routeSecureTasks");
+
+// XSS
+const routeXSSTasks = require("./routes/XSSRoutes/routeXSSTasks");
+const routeXSSPostTask = require("./routes/secureRoutes/routePostTask");
+
+// Using known vulnerable components
+const routeKnownVulTasks = require("./routes/knownVulRoutes/routeKnownVulTasks");
+const routeKnownVulPostTask = require("./routes/secureRoutes/routePostTask");
+
+
 //
 // Configuration
 //
-app.engine("handlebars", handlebars.engine);
+app.engine("handlebars", handlebars({
+    helpers: require("./views/helpers")
+}));
 app.set("view engine", "handlebars");
 app.set("port", process.argv[2] || 80);
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -68,6 +79,10 @@ app.post("/", (req, res, next) => routePostTask(req, res, next));
 // XSS routes
 app.get("/xss", requireAuth, (req, res, next) => routeXSSTasks(req, res, next));
 app.post("/xss", (req, res, next) => routeXSSPostTask(req, res, next));
+
+// Known Vulnerability routes
+app.get("/know-vulnerabilities", requireAuth, (req, res, next) => routeKnownVulTasks(req, res, next));
+app.post("/know-vulnerabilities", (req, res, next) => routeKnownVulPostTask(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));
