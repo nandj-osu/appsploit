@@ -1,6 +1,6 @@
 let db = require("../../db");
 
-const routeXSSPostTask = (req, res, next) => {
+const routePostTask = (req, res, next) => {
     data = [req.body.desc, 0, req.session.user];
 
     sql = "insert into todo(task_description, task_complete, user_id) values(?,?,?)";
@@ -12,4 +12,4 @@ const routeXSSPostTask = (req, res, next) => {
     res.redirect(req.originalUrl);
 };
 
-module.exports = routeXSSPostTask;
+module.exports = routePostTask;
