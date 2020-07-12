@@ -31,11 +31,11 @@
       </ul>
       <div class="btn-group dropleft mr-3">
         <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{vulnerability}}
+          {{default_val vulnerability "Select a vulnerability" }}
         </button>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="/injection">Injection</a>
-          <a class="dropdown-item" href="/broken-auth">Broken Auth</a>
+          <a class="dropdown-item" href="/broken-auth">Broken authentication</a>
           <a class="dropdown-item" href="/sensitive-data">Sensitive data exposure</a>
           <a class="dropdown-item" href="/xxe">XML external entities (XXE)</a>
           <a class="dropdown-item" href="/broken-access-control">Broken access control</a>

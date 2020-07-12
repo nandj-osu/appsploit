@@ -35,13 +35,20 @@ const routeXSSPostTask = require("./routes/secureRoutes/routePostTask");
 const routeKnownVulTasks = require("./routes/knownVulRoutes/routeKnownVulTasks");
 const routeKnownVulPostTask = require("./routes/secureRoutes/routePostTask");
 
+// Insecure deserialization
+const routeInsecureDeserialTasks = require("./routes/insecureDeserialRoutes/routeInsecureDeserialTasks");
+const routeInsecureDeserialPostTask = require("./routes/insecureDeserialRoutes/routeInsecureDeserialPostTask");
 
 //
 // Configuration
 //
-app.engine("handlebars", handlebars({
-    helpers: require("./views/helpers")
-}));
+
+app.engine(
+    "handlebars",
+    handlebars({
+        helpers: require("./views/helpers"),
+    })
+);
 app.set("view engine", "handlebars");
 app.set("port", process.argv[2] || 80);
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -54,6 +61,8 @@ app.use("/", express.static("public"));
 // Middleware
 //
 app.use((req, res, next) => {
+    res.locals.flash = req.session.flash;
+    delete req.session.flash;
     res.locals.secure = req.session.secure;
     next();
 });
@@ -83,6 +92,10 @@ app.post("/xss", (req, res, next) => routeXSSPostTask(req, res, next));
 // Known Vulnerability routes
 app.get("/know-vulnerabilities", requireAuth, (req, res, next) => routeKnownVulTasks(req, res, next));
 app.post("/know-vulnerabilities", (req, res, next) => routeKnownVulPostTask(req, res, next));
+
+// Insecure deserialization
+app.get("/insecure-deserialization", requireAuth, (req, res, next) => routeInsecureDeserialTasks(req, res, next));
+app.post("/insecure-deserialization", (req, res, next) => routeInsecureDeserialPostTask(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));

@@ -7,7 +7,8 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "./node_modules/nodemon/bin/nodemon.js ./index.js",
-    "prettier-watch": "onchange '**/*.js' -- prettier --write {{changed}}"
+    "prettier-watch": "onchange '**/*.js' -- prettier --write {{changed}}",
+    "prod": "./node_modules/pm2/bin/pm2 start index.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
+    "node-serialize": "0.0.4",
+    "pm2": "^4.4.0",
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
