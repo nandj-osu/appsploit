@@ -61,6 +61,8 @@ app.use("/", express.static("public"));
 // Middleware
 //
 app.use((req, res, next) => {
+    res.locals.flash = req.session.flash;
+    delete req.session.flash;
     res.locals.secure = req.session.secure;
     next();
 });
