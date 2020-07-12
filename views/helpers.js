@@ -16,3 +16,8 @@ helpers.sanitize_scripts = function(context) {
 
     return new Handlebars.SafeString(html);
 }
+
+helpers.default_val = function (value, default_val) {
+    var out = value || default_val;
+    return new Handlebars.SafeString(out);
+};
