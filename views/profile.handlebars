@@ -1,0 +1,23 @@
+<div class="col-md-4 mx-auto">
+  {{#if message}}
+  <div class='alert {{messageClass}}' role='alert'>
+    {{message}}
+  </div>
+  {{/if}}
+  <h1>Profile</h1>
+  <div class="task" style="width: 30rem;">
+    Name: {{name}}
+  </div>
+  <div class="task" style="width: 30rem;">
+    Age: {{age}}
+  </div>
+  <div class="task" style="width: 30rem;">
+    Favorite Color: {{color}}
+  </div>
+  <form ref='uploadForm' id='uploadForm' method='post' action="/xxe" encType='multipart/form-data'>
+    <div class='form-group'>
+      <label for='fileUpload'>Upload File</label>
+      <input name='fileUpload' type='file' id='fileUpload' placeholder='choose a file'>
+    </div>
+    <button type='submit' class='btn btn-primary'>Upload File</button>
+  </form>
