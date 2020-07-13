@@ -4,6 +4,7 @@ const bodyparser = require("body-parser");
 const cookieparser = require("cookie-parser");
 const session = require("express-session");
 const sqlite3 = require("sqlite3").verbose();
+const fileUpload = require("express-fileupload");
 const app = express();
 
 // Database object
@@ -39,6 +40,9 @@ const routeKnownVulPostTask = require("./routes/secureRoutes/routePostTask");
 const routeInsecureDeserialTasks = require("./routes/insecureDeserialRoutes/routeInsecureDeserialTasks");
 const routeInsecureDeserialPostTask = require("./routes/insecureDeserialRoutes/routeInsecureDeserialPostTask");
 
+//XXE
+const routeProfile = require("./routes/XXERoutes/routeProfile");
+
 //
 // Configuration
 //
@@ -56,6 +60,7 @@ app.use(bodyparser.json());
 app.use(cookieparser());
 app.use(session({ secret: "secret" }));
 app.use("/", express.static("public"));
+app.use(fileUpload());
 
 //
 // Middleware
@@ -96,6 +101,10 @@ app.post("/know-vulnerabilities", (req, res, next) => routeKnownVulPostTask(req,
 // Insecure deserialization
 app.get("/insecure-deserialization", requireAuth, (req, res, next) => routeInsecureDeserialTasks(req, res, next));
 app.post("/insecure-deserialization", (req, res, next) => routeInsecureDeserialPostTask(req, res, next));
+
+//XXE routes
+app.get("/xxe", requireAuth, (req, res, next) => routeProfile(req, res, next));
+app.post("/xxe", requireAuth, (req, res, next) => routeProfile(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));

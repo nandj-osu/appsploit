@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE root [ <!ENTITY xxe SYSTEM "file:../../secretConfigFile.yaml"> ]>
+    <root>
+        <name>&xxe;</name>
+        <age>100</age>
+        <favColor>blue</favColor>
+    </root>
