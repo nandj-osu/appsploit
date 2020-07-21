@@ -44,7 +44,7 @@ const routeInsecureDeserialPostTask = require("./routes/insecureDeserialRoutes/r
 const routeProfile = require("./routes/XXERoutes/routeProfile");
 
 //Broken Access Control
-const routeBrokenAccessControl = require("./routes/BrokenAccessRoutes/routeBrokenAccessTasks");
+const routeBrokenAccessControl = require("./routes/brokenAccessRoutes/routeBrokenAccessTasks");
 
 //
 // Configuration
