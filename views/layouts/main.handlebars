@@ -38,7 +38,11 @@
           <a class="dropdown-item" href="/broken-auth">Broken authentication</a>
           <a class="dropdown-item" href="/sensitive-data">Sensitive data exposure</a>
           <a class="dropdown-item" href="/xxe">XML external entities (XXE)</a>
-          <a class="dropdown-item" href="/broken-access-control">Broken access control</a>
+          {{#if secure}}
+            <a class="dropdown-item" href="/broken-access-control/">Broken access control</a>
+          {{else}}
+            <a class="dropdown-item" href="/broken-access-control/?id={{session.user}}">Broken access control</a>
+          {{/if}}
           <a class="dropdown-item" href="/security-misconfiguration">Security misconfiguration</a>
           <a class="dropdown-item" href="/xss">Cross-site scripting (XSS)</a>
           <a class="dropdown-item" href="/insecure-deserialization">Insecure deserialization</a>
