@@ -42,6 +42,7 @@ const routeInsecureDeserialPostTask = require("./routes/insecureDeserialRoutes/r
 
 //XXE
 const routeProfile = require("./routes/XXERoutes/routeProfile");
+const routeSecurityMisconfiguration = require("./routes/securityMisconfigRoutes/securityMisconfiguration");
 
 //
 // Configuration
@@ -80,6 +81,14 @@ function requireAuth(req, res, next) {
     }
 }
 
+function requireAdmin(req, res, next) {
+    if (req.session.name !== 'admin') {
+        res.render("403");
+    } else {
+        next();
+    }
+}
+
 /*******************************************************************************
  * Set routes here
  *
@@ -105,6 +114,9 @@ app.post("/insecure-deserialization", (req, res, next) => routeInsecureDeserialP
 //XXE routes
 app.get("/xxe", requireAuth, (req, res, next) => routeProfile(req, res, next));
 app.post("/xxe", requireAuth, (req, res, next) => routeProfile(req, res, next));
+
+//Security Misconfiguration
+app.get("/security-misconfiguration", requireAuth, (req, res, next) => routeSecurityMisconfiguration(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));
