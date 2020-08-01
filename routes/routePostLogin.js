@@ -3,7 +3,7 @@ const cryptoFuncs = require("../public/assets/crypto");
 
 const routePostLogin = (req, res, next) => {
     let context = {};
-    if (req.session.secure && req.body.username === 'admin') {
+    if (req.session.secure && req.body.username === "admin") {
         res.render("403", context);
         return;
     }

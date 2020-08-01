@@ -86,7 +86,7 @@ function requireAuth(req, res, next) {
 }
 
 function requireAdmin(req, res, next) {
-    if (req.session.name !== 'admin') {
+    if (req.session.name !== "admin") {
         res.render("403");
     } else {
         next();
