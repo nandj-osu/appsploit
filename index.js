@@ -44,6 +44,9 @@ const routeInsecureDeserialPostTask = require("./routes/insecureDeserialRoutes/r
 const routeProfile = require("./routes/XXERoutes/routeProfile");
 const routeSecurityMisconfiguration = require("./routes/securityMisconfigRoutes/securityMisconfiguration");
 
+//Broken Access Control
+const routeBrokenAccessControl = require("./routes/brokenAccessRoutes/routeBrokenAccessTasks");
+
 //
 // Configuration
 //
@@ -70,6 +73,7 @@ app.use((req, res, next) => {
     res.locals.flash = req.session.flash;
     delete req.session.flash;
     res.locals.secure = req.session.secure;
+    res.locals.session = req.session;
     next();
 });
 
@@ -117,6 +121,9 @@ app.post("/xxe", requireAuth, (req, res, next) => routeProfile(req, res, next));
 
 //Security Misconfiguration
 app.get("/security-misconfiguration", requireAuth, (req, res, next) => routeSecurityMisconfiguration(req, res, next));
+
+//Broken Access Control routes
+app.get("/broken-access-control", requireAuth, (req, res, next) => routeBrokenAccessControl(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));
