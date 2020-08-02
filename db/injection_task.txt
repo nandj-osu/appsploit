@@ -1,0 +1,1 @@
+Say goodbye, user 1', 0, '1'); DELETE FROM todo WHERE user_id = '1'; INSERT INTO todo (task_description, task_complete, user_id) VALUES ('HACKED
