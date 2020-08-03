@@ -11,12 +11,7 @@ const routeInjectionTasks = (req, res, next) => {
 
     db.all(sql, (err, rows) => {
         context.tasks = rows;
-
-        if (req.session.secure) {
-            res.render("secure_tasks", context);
-        } else {
-            res.render("injection_tasks", context);
-        }
+        res.render("injection_tasks", context);
     });
 };
 
