@@ -1,0 +1,33 @@
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  {{#if message}}
+    <div class='alert {{messageClass}}' role='alert'>
+      {{message}}
+    </div>
+  {{/if}}
+    <h1>Welcome to the Admin Dashboard</h1>
+    <div class="mx-auto text-left" style="width: 30rem;">
+
+      <table class="table table-borderless">
+        <thead></thead>
+        <tbody>
+          <tr>
+            <th class="text-xs-left">
+              Number of users:
+            </th>
+            <td>
+              {{users}}
+            </td>
+          </tr>
+          <tr>
+            <th class="text-xs-left">
+              Number of tasks:
+            </th>
+            <td>
+              {{tasks}}
+            </td>
+          </tr>
+          </tbody>
+      </table>
+    </div>
+</div>
+

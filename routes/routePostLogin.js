@@ -3,7 +3,11 @@ const cryptoFuncs = require("../public/assets/crypto");
 
 const routePostLogin = (req, res, next) => {
     let context = {};
-    db.get(`SELECT id, password_sha256 from user WHERE username = ?`, req.body.username, (err, row) => {
+    if (req.session.secure && req.body.username === "admin") {
+        res.render("403", context);
+        return;
+    }
+    db.get(`SELECT id, username, password_sha256 from user WHERE username = ?`, req.body.username, (err, row) => {
         if (err) {
             return console.error(err.message);
         }
@@ -16,6 +20,7 @@ const routePostLogin = (req, res, next) => {
         let hash = cryptoFuncs.generateSha256Hash(req.body.password);
         if (hash === row.password_sha256) {
             req.session.user = row.id;
+            req.session.name = row.username;
             return res.redirect("/");
         }
 
