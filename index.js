@@ -48,6 +48,10 @@ const routeInjectionTasks = require("./routes/injectionRoutes/routeInjectionTask
 const routeInjectionPostTask = require("./routes/injectionRoutes/routeInjectionPostTask");
 const routeInjectionResetUser1 = require("./routes/injectionRoutes/routeInjectionResetUser1");
 
+//Broken Access Control
+const routeBrokenAccessControl = require("./routes/brokenAccessRoutes/routeBrokenAccessTasks");
+
+
 //
 // Configuration
 //
@@ -74,6 +78,7 @@ app.use((req, res, next) => {
     res.locals.flash = req.session.flash;
     delete req.session.flash;
     res.locals.secure = req.session.secure;
+    res.locals.session = req.session;
     next();
 });
 
@@ -115,6 +120,9 @@ app.post("/xxe", requireAuth, (req, res, next) => routeProfile(req, res, next));
 app.get("/injection", requireAuth, (req, res, next) => routeInjectionTasks(req, res, next));
 app.post("/injection", requireAuth, (req, res, next) => routeInjectionPostTask(req, res, next));
 app.post("/injection/reset-user1", requireAuth, (req, res, next) => routeInjectionResetUser1(req, res, next));
+
+//Broken Access Control routes
+app.get("/broken-access-control", requireAuth, (req, res, next) => routeBrokenAccessControl(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));
