@@ -5,6 +5,7 @@ const routeInjectionTasks = (req, res, next) => {
         vulnerability: "Select a vulnerability",
         endpoint: req.originalUrl,
         exploit_card: "injection_card",
+        user_id: req.session.user
     };
 
     var sql = "SELECT * FROM todo WHERE user_id = '" + req.session.user + "';";
