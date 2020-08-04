@@ -44,8 +44,14 @@ const routeInsecureDeserialPostTask = require("./routes/insecureDeserialRoutes/r
 const routeProfile = require("./routes/XXERoutes/routeProfile");
 const routeSecurityMisconfiguration = require("./routes/securityMisconfigRoutes/securityMisconfiguration");
 
+//Injection
+const routeInjectionTasks = require("./routes/injectionRoutes/routeInjectionTasks");
+const routeInjectionPostTask = require("./routes/injectionRoutes/routeInjectionPostTask");
+const routeInjectionResetUser1 = require("./routes/injectionRoutes/routeInjectionResetUser1");
+
 //Broken Access Control
 const routeBrokenAccessControl = require("./routes/brokenAccessRoutes/routeBrokenAccessTasks");
+
 
 //
 // Configuration
@@ -118,6 +124,11 @@ app.post("/insecure-deserialization", (req, res, next) => routeInsecureDeserialP
 //XXE routes
 app.get("/xxe", requireAuth, (req, res, next) => routeProfile(req, res, next));
 app.post("/xxe", requireAuth, (req, res, next) => routeProfile(req, res, next));
+
+//Injection routes
+app.get("/injection", requireAuth, (req, res, next) => routeInjectionTasks(req, res, next));
+app.post("/injection", requireAuth, (req, res, next) => routeInjectionPostTask(req, res, next));
+app.post("/injection/reset-user1", requireAuth, (req, res, next) => routeInjectionResetUser1(req, res, next));
 
 //Security Misconfiguration
 app.get("/security-misconfiguration", requireAuth, (req, res, next) => routeSecurityMisconfiguration(req, res, next));
