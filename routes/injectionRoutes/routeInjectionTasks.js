@@ -2,7 +2,7 @@ let db = require("../../db");
 
 const routeInjectionTasks = (req, res, next) => {
     let context = {
-        vulnerability: "Select a vulnerability",
+        vulnerability: "Injection",
         endpoint: req.originalUrl,
         exploit_card: "injection_card",
         user_id: req.session.user

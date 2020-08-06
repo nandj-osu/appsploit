@@ -52,6 +52,9 @@ const routeInjectionResetUser1 = require("./routes/injectionRoutes/routeInjectio
 //Broken Access Control
 const routeBrokenAccessControl = require("./routes/brokenAccessRoutes/routeBrokenAccessTasks");
 
+//Sensitive Data Exposure
+const routeSensitiveDataExposureGet = require("./routes/sensitiveDataExposureRoutes/routeSensitiveDataExposureGet");
+const routeSensitiveDataExposurePost = require("./routes/sensitiveDataExposureRoutes/routeSensitiveDataExposurePost");
 
 //
 // Configuration
@@ -135,6 +138,10 @@ app.get("/security-misconfiguration", requireAuth, (req, res, next) => routeSecu
 
 //Broken Access Control routes
 app.get("/broken-access-control", requireAuth, (req, res, next) => routeBrokenAccessControl(req, res, next));
+
+//Sensitive Data Exposure routes
+app.get("/sensitive-data", requireAuth, (req, res, next) => routeSensitiveDataExposureGet(req, res, next));
+app.post("/sensitive-data", requireAuth, (req, res, next) => routeSensitiveDataExposurePost(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));

