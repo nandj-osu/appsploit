@@ -2,8 +2,7 @@ const crypto = require("crypto");
 module.exports = {
     generateSha256Hash: function (password) {
         const sha256 = crypto.createHash("sha256");
-        const hash = sha256.update(password).digest("base64");
-        return hash;
+        return sha256.update(password).digest('hex');
     },
 
     generateAuthToken: function () {
