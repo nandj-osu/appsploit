@@ -5,6 +5,10 @@ const cookieparser = require("cookie-parser");
 const session = require("express-session");
 const sqlite3 = require("sqlite3").verbose();
 const fileUpload = require("express-fileupload");
+
+// Logger w/ configuration
+const pino = require("pino-http")({ autoLogging: false });
+
 const app = express();
 
 // Database object
@@ -56,6 +60,9 @@ const routeBrokenAccessControl = require("./routes/brokenAccessRoutes/routeBroke
 const routeSensitiveDataExposureGet = require("./routes/sensitiveDataExposureRoutes/routeSensitiveDataExposureGet");
 const routeSensitiveDataExposurePost = require("./routes/sensitiveDataExposureRoutes/routeSensitiveDataExposurePost");
 
+//Insufficient logging and monitoring
+const routeInsufficientLoggingTasks = require("./routes/insufficientLoggingRoutes/routeInsufficientLoggingTasks");
+
 //
 // Configuration
 //
@@ -74,6 +81,7 @@ app.use(cookieparser());
 app.use(session({ secret: "secret" }));
 app.use("/", express.static("public"));
 app.use(fileUpload());
+app.use(pino);
 
 //
 // Middleware
@@ -142,6 +150,9 @@ app.get("/broken-access-control", requireAuth, (req, res, next) => routeBrokenAc
 //Sensitive Data Exposure routes
 app.get("/sensitive-data", requireAuth, (req, res, next) => routeSensitiveDataExposureGet(req, res, next));
 app.post("/sensitive-data", requireAuth, (req, res, next) => routeSensitiveDataExposurePost(req, res, next));
+
+//Insufficient logging and monitoring routes
+app.get("/logging-monitoring", requireAuth, (req, res, next) => routeInsufficientLoggingTasks(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));
