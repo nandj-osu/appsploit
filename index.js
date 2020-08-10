@@ -24,6 +24,7 @@ const routeLogin = require("./routes/routeLogin.js");
 const routeRegister = require("./routes/routeRegister.js");
 const routePostRegister = require("./routes/routePostRegister.js");
 const routePostLogin = require("./routes/routePostLogin.js");
+const routeLogout = require("./routes/routeLogout.js");
 
 // Secured
 const routePostTask = require("./routes/secureRoutes/routePostTask");
@@ -157,6 +158,7 @@ app.get("/login", (req, res, next) => routeLogin(req, res, next));
 app.get("/register", (req, res, next) => routeRegister(req, res, next));
 app.post("/register", (req, res, next) => routePostRegister(req, res, next));
 app.post("/login", (req, res, next) => routePostLogin(req, res, next));
+app.get("/logout", (req, res, next) => routeLogout(req, res, next));
 
 // Task Endpoints
 app.get("/task/:task_id", (req, res, next) => routeToggleTask(req, res, next));

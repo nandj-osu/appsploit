@@ -1,5 +1,5 @@
 const db = require("../db");
-const cryptoFuncs = require("../public/assets/crypto");
+const cryptoFuncs = require("../lib/crypto");
 
 const routePostLogin = (req, res, next) => {
     let context = {};
