@@ -60,6 +60,7 @@ const routeSensitiveDataExposurePost = require("./routes/sensitiveDataExposureRo
 
 //Insufficient logging and monitoring
 const routeInsufficientLoggingTasks = require("./routes/insufficientLoggingRoutes/routeInsufficientLoggingTasks");
+const routePerformDictAttack = require("./routes/insufficientLoggingRoutes/routePerformDictAttack");
 
 //
 // Configuration
@@ -150,6 +151,7 @@ app.post("/sensitive-data", requireAuth, (req, res, next) => routeSensitiveDataE
 
 //Insufficient logging and monitoring routes
 app.get("/logging-monitoring", requireAuth, (req, res, next) => routeInsufficientLoggingTasks(req, res, next));
+app.post("/logging-monitoring/dict-attack", requireAuth, (req, res, next) => routePerformDictAttack(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));

@@ -9,7 +9,7 @@ const insufficientLoggingTasks = (req, res, next) => {
     let context = {
         vulnerability: "Select a vulnerability",
         endpoint: req.originalUrl,
-        exploit_card: "default_card",
+        exploit_card: "insufficient_logging_card",
         logs: logs,
     };
 
