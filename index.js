@@ -50,6 +50,10 @@ const routeInjectionTasks = require("./routes/injectionRoutes/routeInjectionTask
 const routeInjectionPostTask = require("./routes/injectionRoutes/routeInjectionPostTask");
 const routeInjectionResetUser1 = require("./routes/injectionRoutes/routeInjectionResetUser1");
 
+//Broken Authentication
+const routeBrokenAuthTasks = require("./routes/brokenAuthRoutes/routeBrokenAuthTasks");
+const routeBrokenAuthPostTask = require("./routes/secureRoutes/routePostTask");
+
 //Broken Access Control
 const routeBrokenAccessControl = require("./routes/brokenAccessRoutes/routeBrokenAccessTasks");
 
@@ -72,7 +76,12 @@ app.set("port", process.argv[2] || 80);
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(cookieparser());
-app.use(session({ secret: "secret" }));
+app.use(
+    session({
+        secret: "secret",
+        cookie: { path: "/", httpOnly: false, secure: false, maxAge: null },
+    })
+);
 app.use("/", express.static("public"));
 app.use(fileUpload());
 
@@ -133,6 +142,10 @@ app.post("/xxe", requireAuth, (req, res, next) => routeProfile(req, res, next));
 app.get("/injection", requireAuth, (req, res, next) => routeInjectionTasks(req, res, next));
 app.post("/injection", requireAuth, (req, res, next) => routeInjectionPostTask(req, res, next));
 app.post("/injection/reset-user1", requireAuth, (req, res, next) => routeInjectionResetUser1(req, res, next));
+
+//Broken Authentication routes
+app.get("/broken-auth", requireAuth, (req, res, next) => routeBrokenAuthTasks(req, res, next));
+app.post("/broken-auth", requireAuth, (req, res, next) => routeBrokenAuthPostTask(req, res, next));
 
 //Security Misconfiguration
 app.get("/security-misconfiguration", requireAuth, (req, res, next) => routeSecurityMisconfiguration(req, res, next));
