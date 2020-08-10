@@ -13,7 +13,7 @@ const routeBrokenAuthTasks = (req, res, next) => {
         if (req.session.secure) {
             res.render("secure_tasks", context);
         } else {
-            res.render("broken_auth_tasks", context);
+            res.render("xss_tasks", context);
         }
     });
 };
