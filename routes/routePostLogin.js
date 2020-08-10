@@ -9,12 +9,12 @@ const routePostLogin = (req, res, next) => {
     }
     db.get(`SELECT id, username, password_sha256 from user WHERE username = ?`, req.body.username, (err, row) => {
         if (err) {
-            req.log.debug(err.message);
+            console.log(`[${new Date().toUTCString()}] ${err.message}`);
             return console.error(err.message);
         }
         if (!row) {
             if (req.session.secure) {
-                req.log.info(`Login failed for user "${req.body.username}"`);
+                console.log(`[${new Date().toUTCString()}] Login failed for user "${req.body.username}"`);
             }
             context.message = "invalid username and/or password";
             context.messageClass = "alert-danger";
@@ -23,17 +23,14 @@ const routePostLogin = (req, res, next) => {
 
         let hash = cryptoFuncs.generateSha256Hash(req.body.password);
         if (hash === row.password_sha256) {
-            if (req.session.secure)
-            {
-                req.log.info(`Login successful for user "${req.body.username}"`);
-            }
+            console.log(`[${new Date().toUTCString()}] Login successful for user "${req.body.username}"`);
             req.session.user = row.id;
             req.session.name = row.username;
             return res.redirect("/");
         }
 
         if (req.session.secure) {
-            req.log.info(`Login failed for user "${req.body.username}"`);
+            console.log(`[${new Date().toUTCString()}] Login failed for user "${req.body.username}"`);
         }
         context.message = "invalid username and/or password";
         context.messageClass = "alert-danger";

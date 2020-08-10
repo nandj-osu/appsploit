@@ -6,9 +6,6 @@ const session = require("express-session");
 const sqlite3 = require("sqlite3").verbose();
 const fileUpload = require("express-fileupload");
 
-// Logger w/ configuration
-const pino = require("pino-http")({ autoLogging: false });
-
 const app = express();
 
 // Database object
@@ -81,7 +78,6 @@ app.use(cookieparser());
 app.use(session({ secret: "secret" }));
 app.use("/", express.static("public"));
 app.use(fileUpload());
-app.use(pino);
 
 //
 // Middleware

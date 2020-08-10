@@ -1,7 +1,7 @@
 let db = require("../../db");
 const fs = require("fs");
 const path = require("path");
-const logFile = "../../logging/appsploit.log";
+const logFile = "../../app.log";
 
 const insufficientLoggingTasks = (req, res, next) => {
     var logs = fs.readFileSync(path.resolve(__dirname, logFile)).toString();
