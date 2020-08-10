@@ -3,6 +3,7 @@ const cookieName = "connect.sid";
 const cookieValue = document.cookie
     .split("; ")
     .find((row) => row.startsWith(cookieName))
-    .split("=")[1];
+    .split("=")[1]
+    .trim();
 
-alert(`${cookieName}=${cookieValue}`);
+console.log(`${cookieName}=${cookieValue}`);
