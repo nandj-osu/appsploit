@@ -7,7 +7,7 @@ const routeSecurityMisconfiguration = (req, res, next) => {
         exploit_card: "security_misconfiguration_card",
     };
     if (req.session.name !== "admin" || req.session.secure) {
-        res.render("security_misconfig", context);
+        res.render("security_misconfig_deny", context);
         return;
     }
     db.all("SELECT COUNT(*) AS userCount FROM user", (err, rows) => {
