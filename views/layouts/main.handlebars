@@ -80,6 +80,11 @@
      {{#if exploit_card}}
      <div id="exploit-card">{{> (lookup . 'exploit_card' )}} </div>
      {{/if}}
+
+     {{#if logs}}
+     AppSploit Latest Logs
+     <pre id="logs">{{> log_viewer }}</pre>
+     {{/if}}
     </div>
     
 

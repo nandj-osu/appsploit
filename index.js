@@ -5,6 +5,7 @@ const cookieparser = require("cookie-parser");
 const session = require("express-session");
 const sqlite3 = require("sqlite3").verbose();
 const fileUpload = require("express-fileupload");
+
 const app = express();
 
 // Database object
@@ -60,6 +61,10 @@ const routeBrokenAccessControl = require("./routes/brokenAccessRoutes/routeBroke
 //Sensitive Data Exposure
 const routeSensitiveDataExposureGet = require("./routes/sensitiveDataExposureRoutes/routeSensitiveDataExposureGet");
 const routeSensitiveDataExposurePost = require("./routes/sensitiveDataExposureRoutes/routeSensitiveDataExposurePost");
+
+//Insufficient logging and monitoring
+const routeInsufficientLoggingTasks = require("./routes/insufficientLoggingRoutes/routeInsufficientLoggingTasks");
+const routePerformDictAttack = require("./routes/insufficientLoggingRoutes/routePerformDictAttack");
 
 //
 // Configuration
@@ -156,6 +161,10 @@ app.get("/broken-access-control", requireAuth, (req, res, next) => routeBrokenAc
 //Sensitive Data Exposure routes
 app.get("/sensitive-data", requireAuth, (req, res, next) => routeSensitiveDataExposureGet(req, res, next));
 app.post("/sensitive-data", requireAuth, (req, res, next) => routeSensitiveDataExposurePost(req, res, next));
+
+//Insufficient logging and monitoring routes
+app.get("/logging-monitoring", requireAuth, (req, res, next) => routeInsufficientLoggingTasks(req, res, next));
+app.post("/logging-monitoring/dict-attack", requireAuth, (req, res, next) => routePerformDictAttack(req, res, next));
 
 // Static pages & general routes
 app.get("/instructions", (req, res, next) => routeInstructions(req, res, next));

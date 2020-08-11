@@ -1,0 +1,27 @@
+<div class="card bg-light mb-3" style="max-width: 25rem;">
+  <div class="card-header">Exploit & Mitigation</div>
+  <div class="card-body">
+    <h5 class="card-title">Insufficient Logging and Monitoring</h5>
+    <p class="card-text">
+      <strong>Exploit</strong> Perform a dictionary attack against the "system_admin" user</p>
+    <p class="card-text">
+      <strong>Mitigation</strong>
+      <br>
+      <ul>
+        <li>Store logs in a central location</li>
+        <li>Log sufficient user context to identify suspicious activity</li>
+        <li>Log useful metadata in a form that is easily parsed</li>
+        <li>Store each instance of important events (e.g. login attempts) to create an audit trail</li>
+        <li>Use active monitoring or alerting</li>
+      </ul>
+      </p>
+    <a href="<Replace>" target="_blank"><strong>Write Up</strong></a> | 
+    <a href="<Replace>" target="_blank"><strong>Video</strong></a>
+    <br>
+    <br>
+    <form action="{{endpoint}}/dict-attack" method="post">
+      <button type="submit" class="btn btn-lg btn-primary">Perform Dict Attack</button>
+    </form>
+
+  </div>
+</div>
