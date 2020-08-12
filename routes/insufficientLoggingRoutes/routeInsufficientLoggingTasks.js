@@ -7,7 +7,7 @@ const insufficientLoggingTasks = (req, res, next) => {
     var logs = fs.readFileSync(path.resolve(__dirname, logFile)).toString();
     
     let context = {
-        vulnerability: "Select a vulnerability",
+        vulnerability: "Insufficient logging and monitoring",
         endpoint: req.originalUrl,
         exploit_card: "insufficient_logging_card",
         logs: logs,
