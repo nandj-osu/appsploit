@@ -5,7 +5,9 @@ CS 467 - Capstone Project -- Security-based research project.
 ## Requirements
 
 Node v14.5.0
+
 npm v6.14.5
+
 Python 3
 
 ## Introduction
