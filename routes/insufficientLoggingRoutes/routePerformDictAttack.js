@@ -5,7 +5,7 @@ const path = require("path");
 const script = path.resolve(__dirname, "../../scripts/dict_attack.py");
 
 const performDictAttack = (req, res, next) => {
-    var app_url = `${req.protocol}://${req.hostname}`;
+    var app_url = `${req.protocol}://${req.get("host")}`;
     var cmd;
     const target_user = "system_admin";
     if (req.session.secure) {

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 import sys
 import os
 import requests as rq
@@ -17,8 +17,8 @@ target_user = args.target_user
 secure = False if args.secure == "unsecure" else True
 
 #Use provided url to AppSploit to build endpoints for attack
-appsploit_login_url = f"{appsploit_url}/login"
-appsploit_toggle_secure_url = f"{appsploit_url}/togglesecure"
+appsploit_login_url = appsploit_url + "/login"
+appsploit_toggle_secure_url = appsploit_url + "/togglesecure"
 
 #File containing list of common passwords to test against provided AppSploit user
 common_passwords_path = os.path.join(sys.path[0], "common_passwords.txt")
@@ -57,6 +57,6 @@ with rq.Session() as s:
             break
 
     if success:
-        print(f"[{parser.prog}] Credentials found: ('{target_user}','{password}')")
+        print "[" + parser.prog + "] Credentials found: ('" + target_user + "','" + password + "')"
     else:
-        print(f"[{parser.prog}] No credentials found for user '{target_user}'")
+        print "[" + parser.prog + "] No credentials found for user '" + target_user + "'"
