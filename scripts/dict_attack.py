@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+from __future__ import print_function
 import sys
 import os
 import requests as rq
@@ -57,6 +58,6 @@ with rq.Session() as s:
             break
 
     if success:
-        print "[" + parser.prog + "] Credentials found: ('" + target_user + "','" + password + "')"
+        print("[" + parser.prog + "] Credentials found: ('" + target_user + "','" + password + "')")
     else:
-        print "[" + parser.prog + "] No credentials found for user '" + target_user + "'"
+        print("[" + parser.prog + "] No credentials found for user '" + target_user + "'")
