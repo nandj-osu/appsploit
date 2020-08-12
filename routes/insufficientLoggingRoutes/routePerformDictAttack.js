@@ -9,7 +9,6 @@ const performDictAttack = (req, res, next) => {
     const target_user = "system_admin";
     if (req.session.secure) {
         app_mode = "secure";
-        cmd = `python "${script}" ${app_url} ${target_user} secure`;
     } else {
         app_mode = "unsecure";
     }
