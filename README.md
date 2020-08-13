@@ -36,5 +36,8 @@ Additionally, we will be demonstrating how a bad actor might conduct a cryptogra
 ## Quick start
 
 ```
-❯❯ node index.js
+❯❯ npm start
 ```
+Register an account (or use a predefined account: user1/user1pass)
+Navigate to an exploit page using the drop-down menu in the top right
+Follow the write-up instructions and video demo that are linked on the page
